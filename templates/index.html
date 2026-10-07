@@ -1,0 +1,75 @@
+{% extends "base.html" %} {% block title %}Dashboard • Diário de Perspectivas{% endblock %} {% block content %}
+<!-- HERO -->
+<section class="hero">
+    <div class="position-relative" style="z-index: 1;">
+        <div class="small text-uppercase fw-bold mb-2" style="color: var(--pink); letter-spacing: 2px;"> ✦ Diário de
+            Perspectivas </div>
+        <h1> Um lugar para guardar<br> o que aconteceu. </h1>
+        <p> Registre momentos, sentimentos e situações importantes. Com o tempo, você consegue enxergar a história como
+            um todo, não apenas um momento isolado. </p>
+        <div class="mt-4 d-flex gap-2 flex-wrap"> <a class="btn btn-primary" href="{{ url_for('novo') }}"> + Registrar
+                acontecimento </a> <a class="btn btn-outline-primary" href="{{ url_for('acontecimentos') }}"> Ver
+                acontecimentos </a> </div>
+    </div>
+</section> <!-- ESTATÍSTICAS -->
+<div class="row g-3 mb-4">
+    <div class="col-6 col-lg-3">
+        <div class="card stat-card stat-total">
+            <div class="stat-label"> Total </div> <span class="stat-number"> {{ total }} </span>
+            <div class="small text-muted"> acontecimentos registrados </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stat-card stat-positive">
+            <div class="stat-label"> Positivos </div> <span class="stat-number"> {{ positivos }} </span>
+            <div class="small text-muted"> momentos bons </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stat-card stat-negative">
+            <div class="stat-label"> Negativos </div> <span class="stat-number"> {{ negativos }} </span>
+            <div class="small text-muted"> momentos difíceis </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stat-card stat-ambiguous">
+            <div class="stat-label"> Ambíguos </div> <span class="stat-number"> {{ ambiguos }} </span>
+            <div class="small text-muted"> situações complexas </div>
+        </div>
+    </div>
+</div> <!-- REGISTROS RECENTES -->
+<div class="card">
+    <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <div class="small text-uppercase fw-bold" style="color: var(--pink); letter-spacing: 1.5px;"> Histórico
+                </div>
+                <h3 class="mb-1"> Registros recentes </h3>
+                <div class="text-muted small"> Os acontecimentos adicionados mais recentemente. </div>
+            </div> {% if recentes %} <a href="{{ url_for('acontecimentos') }}"
+                class="btn btn-outline-primary d-none d-md-inline-flex"> Ver todos </a> {% endif %}
+        </div> {% if recentes %} <div class="d-flex flex-column gap-3"> {% for item in recentes %} <a
+                href="{{ url_for('detalhe', id=item.id) }}" class="text-decoration-none">
+                <div
+                    class="event-card {% if item.categoria == 'positivo' %} positive {% elif item.categoria == 'negativo' %} negative {% else %} ambiguous {% endif %} ">
+                    <div class="d-flex justify-content-between align-items-start gap-3">
+                        <div class="flex-grow-1">
+                            <div class="event-title"> {{ item.titulo }} </div>
+                            <div class="event-date mb-2"> {{ item.data.strftime('%d/%m/%Y') }} {% if item.tema %} · {{
+                                item.tema }} {% endif %} </div> {% if item.descricao %} <div class="event-description">
+                                {{ item.descricao[:180] }} {% if item.descricao|length > 180 %}...{% endif %} </div> {%
+                            endif %}
+                        </div> <span
+                            class="badge {% if item.categoria == 'positivo' %} badge-positive {% elif item.categoria == 'negativo' %} badge-negative {% else %} badge-ambiguous {% endif %} ">
+                            {% if item.categoria == 'positivo' %} Positivo {% elif item.categoria == 'negativo' %}
+                            Negativo {% else %} Ambíguo {% endif %} </span>
+                    </div>
+                </div>
+            </a> {% endfor %} </div> {% else %} <div class="empty-state">
+            <div class="empty-state-icon"> ✦ </div>
+            <h4> Ainda não há acontecimentos </h4>
+            <p class="text-muted mb-4"> Comece registrando alguma coisa que aconteceu. </p> <a
+                href="{{ url_for('novo') }}" class="btn btn-primary"> + Registrar primeiro acontecimento </a>
+        </div> {% endif %}
+    </div>
+</div> {% endblock %}

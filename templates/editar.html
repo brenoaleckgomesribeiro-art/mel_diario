@@ -1,0 +1,484 @@
+{% extends "base.html" %}
+
+{% block title %}Editar acontecimento • Diário de Perspectivas{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-xl-8 col-lg-9">
+
+        <div class="mb-4">
+
+            <div class="small text-uppercase fw-bold mb-2"
+                 style="color: var(--pink); letter-spacing: 2px;">
+                ✦ Editar registro
+            </div>
+
+            <h1 class="mb-2">
+                Ajustar acontecimento
+            </h1>
+
+            <p class="text-muted mb-0">
+                Corrija ou complemente as informações deste registro.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-body p-4 p-md-5">
+
+                <form method="post">
+
+                    <!-- =========================
+                         TÍTULO
+                    ========================== -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Título
+                        </label>
+
+                        <input
+                            type="text"
+                            name="titulo"
+                            class="form-control form-control-lg"
+                            maxlength="160"
+                            value="{{ acontecimento.titulo }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- =========================
+                         DATA
+                    ========================== -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Data
+                        </label>
+
+                        <input
+                            type="date"
+                            name="data"
+                            class="form-control"
+                            value="{{ acontecimento.data.isoformat() }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- =========================
+                         CLASSIFICAÇÃO
+                    ========================== -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Classificação
+                        </label>
+
+                        <select
+                            name="categoria"
+                            class="form-select"
+                        >
+
+                            <option
+                                value="positivo"
+                                {% if acontecimento.categoria == "positivo" %}
+                                    selected
+                                {% endif %}
+                            >
+                                ✦ Positivo
+                            </option>
+
+                            <option
+                                value="negativo"
+                                {% if acontecimento.categoria == "negativo" %}
+                                    selected
+                                {% endif %}
+                            >
+                                ✦ Negativo
+                            </option>
+
+                            <option
+                                value="ambíguo"
+                                {% if acontecimento.categoria == "ambíguo" %}
+                                    selected
+                                {% endif %}
+                            >
+                                ✦ Ambíguo
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- =========================
+                         TEMA
+                    ========================== -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Tema
+                        </label>
+
+                        <select
+                            name="tema"
+                            class="form-select"
+                        >
+
+                            <option
+                                value="carinho"
+                                {% if acontecimento.tema == "carinho" %}selected{% endif %}
+                            >
+                                Carinho
+                            </option>
+
+                            <option
+                                value="comunicação"
+                                {% if acontecimento.tema == "comunicação" %}selected{% endif %}
+                            >
+                                Comunicação
+                            </option>
+
+                            <option
+                                value="confiança"
+                                {% if acontecimento.tema == "confiança" %}selected{% endif %}
+                            >
+                                Confiança
+                            </option>
+
+                            <option
+                                value="ciúmes"
+                                {% if acontecimento.tema == "ciúmes" %}selected{% endif %}
+                            >
+                                Ciúmes
+                            </option>
+
+                            <option
+                                value="amizades"
+                                {% if acontecimento.tema == "amizades" %}selected{% endif %}
+                            >
+                                Amizades
+                            </option>
+
+                            <option
+                                value="tempo_juntos"
+                                {% if acontecimento.tema == "tempo_juntos" %}selected{% endif %}
+                            >
+                                Tempo juntos
+                            </option>
+
+                            <option
+                                value="conflitos"
+                                {% if acontecimento.tema == "conflitos" %}selected{% endif %}
+                            >
+                                Conflitos
+                            </option>
+
+                            <option
+                                value="apoio"
+                                {% if acontecimento.tema == "apoio" %}selected{% endif %}
+                            >
+                                Apoio
+                            </option>
+
+                            <option
+                                value="diversão"
+                                {% if acontecimento.tema == "diversão" %}selected{% endif %}
+                            >
+                                Diversão
+                            </option>
+
+                            <option
+                                value="liberdade"
+                                {% if acontecimento.tema == "liberdade" %}selected{% endif %}
+                            >
+                                Liberdade
+                            </option>
+
+                            <option
+                                value="outro"
+                                {% if acontecimento.tema == "outro" %}selected{% endif %}
+                            >
+                                Outro
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- =========================
+                         SENTIMENTO
+                    ========================== -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Sentimento
+                        </label>
+
+                        <select
+                            name="sentimento"
+                            class="form-select"
+                        >
+
+                            <option
+                                value="feliz"
+                                {% if acontecimento.sentimento == "feliz" %}selected{% endif %}
+                            >
+                                Feliz
+                            </option>
+
+                            <option
+                                value="triste"
+                                {% if acontecimento.sentimento == "triste" %}selected{% endif %}
+                            >
+                                Triste
+                            </option>
+
+                            <option
+                                value="ansioso"
+                                {% if acontecimento.sentimento == "ansioso" %}selected{% endif %}
+                            >
+                                Ansioso
+                            </option>
+
+                            <option
+                                value="irritado"
+                                {% if acontecimento.sentimento == "irritado" %}selected{% endif %}
+                            >
+                                Irritado
+                            </option>
+
+                            <option
+                                value="frustrado"
+                                {% if acontecimento.sentimento == "frustrado" %}selected{% endif %}
+                            >
+                                Frustrado
+                            </option>
+
+                            <option
+                                value="aliviado"
+                                {% if acontecimento.sentimento == "aliviado" %}selected{% endif %}
+                            >
+                                Aliviado
+                            </option>
+
+                            <option
+                                value="confuso"
+                                {% if acontecimento.sentimento == "confuso" %}selected{% endif %}
+                            >
+                                Confuso
+                            </option>
+
+                            <option
+                                value="carinhoso"
+                                {% if acontecimento.sentimento == "carinhoso" %}selected{% endif %}
+                            >
+                                Carinhoso
+                            </option>
+
+                            <option
+                                value="neutro"
+                                {% if acontecimento.sentimento == "neutro" %}selected{% endif %}
+                            >
+                                Neutro
+                            </option>
+
+                            <option
+                                value="não identificado"
+                                {% if acontecimento.sentimento == "não identificado" %}selected{% endif %}
+                            >
+                                Não identificado
+                            </option>
+
+                            <option
+                                value="outro"
+                                {% if acontecimento.sentimento == "outro" %}selected{% endif %}
+                            >
+                                Outro
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- =========================
+                         IMPACTO
+                    ========================== -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Impacto
+                        </label>
+
+                        <select
+                            name="impacto"
+                            class="form-select"
+                        >
+
+                            <option value="-5"
+                                {% if acontecimento.impacto == -5 %}selected{% endif %}>
+                                -5 — Muito negativo
+                            </option>
+
+                            <option value="-4"
+                                {% if acontecimento.impacto == -4 %}selected{% endif %}>
+                                -4 — Negativo
+                            </option>
+
+                            <option value="-3"
+                                {% if acontecimento.impacto == -3 %}selected{% endif %}>
+                                -3 — Moderadamente negativo
+                            </option>
+
+                            <option value="-2"
+                                {% if acontecimento.impacto == -2 %}selected{% endif %}>
+                                -2 — Levemente negativo
+                            </option>
+
+                            <option value="-1"
+                                {% if acontecimento.impacto == -1 %}selected{% endif %}>
+                                -1 — Pouco negativo
+                            </option>
+
+                            <option value="0"
+                                {% if acontecimento.impacto == 0 %}selected{% endif %}>
+                                0 — Neutro
+                            </option>
+
+                            <option value="1"
+                                {% if acontecimento.impacto == 1 %}selected{% endif %}>
+                                +1 — Pouco positivo
+                            </option>
+
+                            <option value="2"
+                                {% if acontecimento.impacto == 2 %}selected{% endif %}>
+                                +2 — Levemente positivo
+                            </option>
+
+                            <option value="3"
+                                {% if acontecimento.impacto == 3 %}selected{% endif %}>
+                                +3 — Moderadamente positivo
+                            </option>
+
+                            <option value="4"
+                                {% if acontecimento.impacto == 4 %}selected{% endif %}>
+                                +4 — Positivo
+                            </option>
+
+                            <option value="5"
+                                {% if acontecimento.impacto == 5 %}selected{% endif %}>
+                                +5 — Muito positivo
+                            </option>
+
+                        </select>
+
+                        <div class="form-text text-muted mt-2">
+                            O impacto representa o quanto esse acontecimento
+                            afetou positivamente ou negativamente a situação.
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================
+                         DESCRIÇÃO
+                    ========================== -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Descrição
+                        </label>
+
+                        <textarea
+                            name="descricao"
+                            class="form-control"
+                            rows="10"
+                            required
+                        >{{ acontecimento.descricao }}</textarea>
+
+                    </div>
+
+
+                    <!-- =========================
+                         IA
+                    ========================== -->
+
+                    <div class="ai-box mb-4">
+
+                        <div class="form-check">
+
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                value="1"
+                                id="reanalisar"
+                                name="reanalisar"
+                            >
+
+                            <label
+                                class="form-check-label fw-bold"
+                                for="reanalisar"
+                            >
+                                Reanalisar este relato com a IA
+                            </label>
+
+                        </div>
+
+                        <div class="small text-muted mt-2 ms-4">
+                            Se marcar esta opção, a IA poderá atualizar
+                            classificação, tema, impacto, sentimento e análise.
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================
+                         BOTÕES
+                    ========================== -->
+
+                    <div class="d-flex flex-column flex-sm-row justify-content-end gap-2">
+
+                        <a
+                            href="{{ url_for('detalhe', id=acontecimento.id) }}"
+                            class="btn btn-secondary"
+                        >
+                            Cancelar
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary px-4"
+                        >
+                            ✦ Salvar alterações
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

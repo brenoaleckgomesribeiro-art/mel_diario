@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+
+{% block title %}{{ acontecimento.titulo }} • Diário de Perspectivas{% endblock %}
+
+{% block content %}
+
+<!-- CABEÇALHO -->
+
+<div class="mb-4">
+
+    <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+
+        <div>
+
+            <div class="d-flex align-items-center gap-2 mb-3">
+
+                <span class="badge
+                    {% if acontecimento.categoria == 'positivo' %}
+                        badge-positive
+                    {% elif acontecimento.categoria == 'negativo' %}
+                        badge-negative
+                    {% else %}
+                        badge-ambiguous
+                    {% endif %}
+                ">
+
+                    {% if acontecimento.categoria == 'positivo' %}
+                        Positivo
+                    {% elif acontecimento.categoria == 'negativo' %}
+                        Negativo
+                    {% else %}
+                        Ambíguo
+                    {% endif %}
+
+                </span>
+
+                <span class="text-muted small">
+                    {{ acontecimento.data.strftime('%d/%m/%Y') }}
+                </span>
+
+            </div>
+
+
+            <h1 class="mb-2">
+                {{ acontecimento.titulo }}
+            </h1>
+
+
+            {% if acontecimento.tema %}
+
+                <div class="text-muted">
+                    ✦ {{ acontecimento.tema }}
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- AÇÕES -->
+
+        <div class="d-flex gap-2">
+
+            <a
+                class="btn btn-outline-primary"
+                href="{{ url_for('editar', id=acontecimento.id) }}"
+            >
+                Editar
+            </a>
+
+
+            <form
+                method="post"
+                action="{{ url_for('excluir', id=acontecimento.id) }}"
+                onsubmit="return confirm('Excluir este acontecimento?')"
+            >
+
+                <button
+                    type="submit"
+                    class="btn btn-outline-danger"
+                >
+                    Excluir
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row g-4">
+
+
+    <!-- CONTEÚDO PRINCIPAL -->
+
+    <div class="col-lg-8">
+
+
+        <!-- RELATO -->
+
+        <div class="card mb-4">
+
+            <div class="card-body p-4 p-md-5">
+
+                <div class="small text-uppercase fw-bold mb-2"
+                     style="color: var(--pink); letter-spacing: 1.5px;">
+                    O acontecimento
+                </div>
+
+                <h3 class="mb-4">
+                    O que aconteceu
+                </h3>
+
+                <div
+                    class="event-description text-preline"
+                    style="font-size: 1.05rem; line-height: 1.9;"
+                >
+                    {{ acontecimento.descricao }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ANÁLISE DA IA -->
+
+        <div class="ai-box mb-4">
+
+            <h5>
+                Análise da IA
+            </h5>
+
+            {% if acontecimento.analise_ia %}
+
+                <p
+                    class="mb-0 text-preline"
+                    style="line-height: 1.8;"
+                >
+                    {{ acontecimento.analise_ia }}
+                </p>
+
+            {% else %}
+
+                <p class="text-muted mb-0">
+                    Este acontecimento ainda não possui uma análise da IA.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+    </div>
+
+
+    <!-- LATERAL -->
+
+    <div class="col-lg-4">
+
+
+        <!-- CLASSIFICAÇÃO -->
+
+        <div class="card mb-4">
+
+            <div class="card-body p-4">
+
+                <div class="small text-uppercase fw-bold mb-2"
+                     style="color: var(--pink); letter-spacing: 1.5px;">
+                    Organização
+                </div>
+
+                <h4 class="mb-4">
+                    Classificação
+                </h4>
+
+
+                <!-- TEMA -->
+
+                <div class="mb-4">
+
+                    <div class="small text-muted mb-1">
+                        Tema
+                    </div>
+
+                    <div class="fw-bold">
+                        {{ acontecimento.tema or "Não definido" }}
+                    </div>
+
+                </div>
+
+
+                <!-- SENTIMENTO -->
+
+                <div class="mb-4">
+
+                    <div class="small text-muted mb-1">
+                        Sentimento
+                    </div>
+
+                    <div class="fw-bold">
+                        {{ acontecimento.sentimento or "Não definido" }}
+                    </div>
+
+                </div>
+
+
+                <!-- IMPACTO -->
+
+                <div>
+
+                    <div class="small text-muted mb-1">
+                        Impacto
+                    </div>
+
+                    <div class="display-5 fw-bold
+                        {% if acontecimento.impacto > 0 %}
+                            text-success
+                        {% elif acontecimento.impacto < 0 %}
+                            text-danger
+                        {% else %}
+                            text-warning
+                        {% endif %}
+                    ">
+
+                        {{ "%+d"|format(acontecimento.impacto) }}
+
+                    </div>
+
+                    <div class="small text-muted">
+                        escala de -5 a +5
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DATA -->
+
+        <div class="card">
+
+            <div class="card-body p-4">
+
+                <div class="small text-muted mb-1">
+                    Registrado em
+                </div>
+
+                <div class="fw-bold">
+                    {{ acontecimento.criado_em.strftime('%d/%m/%Y às %H:%M') }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+{% endblock %}
